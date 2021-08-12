@@ -250,9 +250,9 @@ static long SetITimer1(long interval, long value)
 
 	SetTimeval(&it.it_interval, interval);
 	SetTimeval(&it.it_value, value);
+	signal(SIGALRM, CatchAlarm);
 	if (setitimer(ITIMER_REAL, &it, &old) < 0)
 		die("setitimer");
-	signal(SIGALRM, CatchAlarm);
 	return GetTimeval(&old.it_value);
 }
 
